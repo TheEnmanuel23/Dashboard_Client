@@ -1,0 +1,1 @@
+Aplicación la interacción de clientes con imagenes svg, a través de filtros
