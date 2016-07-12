@@ -8,6 +8,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from codemirror import CodeMirrorTextarea
 
 
 class AuthGroup(models.Model):
@@ -143,6 +144,9 @@ class DxinConexionConfiguracion(models.Model):
         managed = False
         db_table = 'dxin_conexion_configuracion'
 
+    def __str__(self):
+        return self.nb_servidor
+
 
 class DxinFiltros(models.Model):
     id_proyecto = models.CharField(max_length=100)
@@ -159,17 +163,20 @@ class DxinFiltros(models.Model):
 
 
 class DxinIndicadores(models.Model):
-    id_proyecto = models.CharField(max_length=50)
+    id_proyecto = models.ForeignKey('DxinProyectos', models.DO_NOTHING, db_column='id_proyecto')
     id_indicador = models.CharField(primary_key=True, max_length=50)
     de_indicador = models.CharField(max_length=500)
     id_columna = models.CharField(max_length=50)
     ti_formato_numerico = models.CharField(max_length=50)
-    fh_carga = models.DateField()    
+    fh_carga = models.DateField()
+    in_predeterminado = models.CharField(max_length=1)
 
     class Meta:
         managed = False
         db_table = 'dxin_indicadores'
 
+    def __str__(self):
+        return self.de_indicador
 
 
 class DxinMapasClaves(models.Model):
@@ -185,17 +192,19 @@ class DxinMapasClaves(models.Model):
 
 
 class DxinProyectos(models.Model):
-    id_proyecto = models.CharField(primary_key=True, max_length=50)
+    id_proyecto = models.IntegerField(primary_key=True)
     de_proyecto = models.CharField(max_length=200)
-    id_indicador_defecto = models.CharField(max_length=50, blank=True, null=True)
     ti_dato_mostrar = models.CharField(max_length=5, blank=True, null=True)
-    id_conexionbd = models.IntegerField()
-    sql = models.CharField(max_length=200, blank=True, null=True)
+    id_conexionbd = models.ForeignKey(DxinConexionConfiguracion, models.DO_NOTHING, db_column='id_conexionbd')
+    sql = models.TextField(max_length=2000, blank=True, null=True)
     fh_carga = models.DateField()
 
     class Meta:
         managed = False
         db_table = 'dxin_proyectos'
+
+    def __str__(self):
+        return self.de_proyecto
 
 
 class DxinReglas(models.Model):
