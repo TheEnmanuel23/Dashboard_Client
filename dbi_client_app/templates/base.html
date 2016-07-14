@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard - Client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="TheDataAge">
+	<!-- Bootstrap core CSS -->    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+  <section class="container" >
+      <!--header start-->
+	<header class="header black-bg">
+		<div class="sidebar-toggle-box">
+		  	<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+		</div>
+		<!--logo start-->
+		<a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+		<div class="nav notify-row" id="top_menu">
+			  <ul class="nav top-menu">
+                    <!-- settings start -->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                            Indicadores
+                        </a>
+                        <ul class="dropdown-menu extended tasks-bar">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green">You have {{ indicadores_list|length }} pending tasks</p>
+                            </li>
+                            {% for indicador in indicadores_list %}
+								<li>
+                                <a href="index.html#">
+                                    <div class="task-info">
+                                        <div class="desc">{{ indicador }}</div>
+                                    </div>
+                                </a>
+                            </li>
+							{% endfor %}
+                            
+                        </ul>
+                    </li>
+			  </ul>
+		</div>
+		<div class="top-menu">
+			<ul class="nav pull-right top-menu">
+			    <li><a class="logout" href="login.html">Logout</a></li>
+			</ul>
+		</div>
+    </header>
+  	<section id="main-content">
+		<section class="wrapper">
+		  	<div class="row">                  
+				{% block main %}
+				<!-- Landing page here-->
+				{% endblock main %}
+		  	</div><! --/row -->
+		</section>
+	</section>
+
+      <!--main content end-->
+      <!--footer start-->
+	<footer class="site-footer">
+	  	<div class="text-center">
+	      	2014 - Alvarez.is
+	     	<a href="index.html#" class="go-top">
+	        	<i class="fa fa-angle-up"></i>
+	     	</a>
+	  	</div>
+	</footer>
+      <!--footer end-->
+  </section>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
