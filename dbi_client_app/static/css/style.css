@@ -413,8 +413,8 @@ ul.sidebar-menu li a.active i {
 }
 
 .black-bg {
-    background: #F04124;
-    border-bottom: 1px solid #B1331E;
+    background: #323131;
+    border-bottom: 1px solid #030303;
 }
 
 .wrapper {
@@ -515,7 +515,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .dropdown-menu.extended li p {
     background-color: #F1F2F7;
-    color: #666666;
+    color: white;
     margin: 0;
     padding: 10px;
     border-radius: 4px 4px 0px 0px;
@@ -523,7 +523,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended li p.green {
-    background-color: #DDDDDD;
+    background-color: #43AC6A;
 }
 
 .dropdown-menu.extended li p.yellow {
@@ -726,9 +726,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     border-top-color: #FCB322 !important;
 }
 .notify-arrow-green {
-    border-color: transparent transparent #DDDDDD;
-    border-bottom-color: #DDDDDD !important;
-    border-top-color: #DDDDDD !important;
+    border-color: transparent transparent #43AC6A;
+    border-bottom-color: #43AC6A !important;
+    border-top-color: #43AC6A !important;
 }
 
 
@@ -2215,8 +2215,8 @@ label {
 
 /*footer*/
 .site-footer {
-    background: rgb(240, 65, 36);;
-    color: #fff;
+    background: #43AC6A;
+    color: white;
     padding: 10px 0;
 }
 
