@@ -20,11 +20,13 @@ class ConfigProject():
 		self.cursor.execute(sql)
 		return self.cursor
 
-	def getIndicadoresToShow(self):
+	def getIndicadoresList(self):
+		data = list()
 		allIndicadoresByProject = DxinIndicadores.objects.filter(id_proyecto = self.project.pk)
 		for indicador in allIndicadoresByProject:
 			if indicador.id_columna in self.getColumnsDescriptions():
-				yield indicador
+				data.append(indicador)
+		return data
 
 	def getColumnsDescriptions(self):
 		columns = [col[0] for col in self.cursor.description]
@@ -32,7 +34,7 @@ class ConfigProject():
 
 	def getIndicadoresWithValue(self):
 		data = list( )
-		indicadores = self.getIndicadoresToShow()
+		indicadores = self.getIndicadoresList()
 		row = self.getRowOfCursor('PET')
 		for indicador in indicadores:			
 			data.append({

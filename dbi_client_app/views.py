@@ -20,5 +20,5 @@ class home(DetailView):
 	    self.object = self.get_object()
 	    data = ConfigProject(self.object)
 	    context['data_table'] = data.getIndicadoresWithValue()
-	    context['indicadores_list'] = data.getIndicadoresToShow()
+	    context['indicadores_list'] = data.getIndicadoresList()
 	    return context

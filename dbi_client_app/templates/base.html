@@ -20,7 +20,7 @@
 		  	<div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
 		</div>
 		<!--logo start-->
-		<a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+		<a href="index.html" class="logo">Dashboard cliente</a>
 		<div class="nav notify-row" id="top_menu">
 			  <ul class="nav top-menu">
                     <!-- settings start -->
@@ -31,7 +31,7 @@
                         <ul class="dropdown-menu extended tasks-bar">
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
-                                <p class="green">You have {{ indicadores_list|length }} pending tasks</p>
+                                <p class="green">{{ indicadores_list|length }} indicadores encontrados</p>
                             </li>
                             {% for indicador in indicadores_list %}
 								<li>
@@ -46,11 +46,6 @@
                         </ul>
                     </li>
 			  </ul>
-		</div>
-		<div class="top-menu">
-			<ul class="nav pull-right top-menu">
-			    <li><a class="logout" href="login.html">Logout</a></li>
-			</ul>
 		</div>
     </header>
   	<section id="main-content">
@@ -67,9 +62,9 @@
       <!--footer start-->
 	<footer class="site-footer">
 	  	<div class="text-center">
-	      	2014 - Alvarez.is
+	      	Todos los derechos reservados 2016. TheDataAge
 	     	<a href="index.html#" class="go-top">
-	        	<i class="fa fa-angle-up"></i>
+	        	<i class="fa glyphicon glyphicon-chevron-up"></i>
 	     	</a>
 	  	</div>
 	</footer>
