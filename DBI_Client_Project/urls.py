@@ -20,4 +20,5 @@ from dbi_client_app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^project/(?P<pk>\d+)', views.home.as_view(), name="home"),
+    url(r'^indicadorTableValues/$', views.indicadoresTableValues.as_view(), name="indicadorTableValues"),
 ]
