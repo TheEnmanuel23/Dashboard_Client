@@ -1,0 +1,1 @@
+dbClient.Models.IndicadorTableValues = Backbone.Model.extend();
