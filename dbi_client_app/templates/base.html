@@ -181,55 +181,38 @@
       <!--main content start-->
       <section id="main-content">
           <section class="wrapper">
-
               <div class="row">
-                  <div class="col-lg-9">
-					<div class="row">
-						<!-- TWITTER PANEL -->
-						<div class="col-md-4 mb"><! -- /darkblue panel -->
-						</div><!-- /col-md-4 -->
-						<div class="col-md-4 col-sm-4 mb">
-							<!-- REVENUE PANEL -->
-						</div><!-- /col-md-4 -->
-						
-					</div><!-- /row -->
-					
-                  </div><!-- /col-lg-9 END SECTION MIDDLE -->
+                <div class="col-lg-8">
+        					 <div class="row">
+        						<!-- TWITTER PANEL -->
+        						<div class="col-md-4 mb"><! -- /darkblue panel -->
+        						</div><!-- /col-md-4 -->
+        						<div class="col-md-4 col-sm-4 mb">
+        							<!-- REVENUE PANEL -->
+        						</div><!-- /col-md-4 -->
+        						
+    					     </div><!-- /row -->
+                </div><!-- /col-lg-9 END SECTION MIDDLE -->
                   
                   
       <!-- **********************************************************************************************************************************************************
       RIGHT SIDEBAR CONTENT
       *********************************************************************************************************************************************************** -->                  
                   
-                  <div class="col-lg-3 ds">
+                  <div class="col-lg-4 ds">
                     <!--COMPLETED ACTIONS DONUTS CHART-->
-						<h3>NOTIFICATIONS</h3>
-                                        
-                      <!-- First Action -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
-                      	</div>
-                      	<div class="details">
-                      		<p><muted>2 Minutes Ago</muted><br/>
-                      		   <a href="#">James Brown</a> subscribed to your newsletter.<br/>
-                      		</p>
-                      	</div>
-                      </div>
-
-                       <!-- USERS ONLINE SECTION -->
-						<h3>TEAM MEMBERS</h3>
-                      <!-- First Member -->
-                      <div class="desc">
-                      	<div class="thumb">
-                      		<img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
-                      	</div>
-                      	<div class="details">
-                      		<p><a href="#">DIVYA MANIAN</a><br/>
-                      		   <muted>Available</muted>
-                      		</p>
-                      	</div>
-                      </div>                      
+						        <h3>TABLA DE INDICADORES</h3>                                        
+                      <!-- TABLE INDICADORES -->
+                     <table class="table table-striped table-hover ">
+                      <thead>
+                        <tr>
+                          <th>Indicador</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody id="indicador-table-values">
+                      </tbody>
+                    </table>                  
                   </div><!-- /col-lg-3 -->
               </div><! --/row -->
           </section>
@@ -265,6 +248,13 @@
     <script src="{% static 'js/backbone/models/models.js' %}"></script>
     <script src="{% static 'js/backbone/collections/collections.js' %}"></script>
     <script src="{% static 'js/backbone/views/app.js' %}"></script> 
-    <script src="{% static 'js/main.js' %}"></script> 
+    <script src="{% static 'js/backbone/views/indicadoresTableValues.js' %}"></script>     
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/template" id="indicadores-tables-values-template">      
+      <tr>
+        <td><%= indicador %></td>
+        <td><%= valor %></td>
+      </tr>
+    </script>
   </body>
 </html>
