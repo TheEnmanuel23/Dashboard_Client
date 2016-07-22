@@ -1,5 +1,7 @@
  $(function(){
 	 app = new dbClient.Views.app();
+	 app.loadImage();
+
 	 window.Collections.indicadoresTableValues = new dbClient.Collections.IndicadorTableValues();
 	 window.Views.indicadoresTableValues = new dbClient.Views.IndicadoresTableValues({
 	 		model: window.Collections.indicadoresTableValues
