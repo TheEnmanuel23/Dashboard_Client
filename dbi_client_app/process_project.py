@@ -38,7 +38,9 @@ class ConfigProject():
 		row = self.getRowOfCursor('PET')
 		for indicador in indicadores:			
 			data.append({
-				indicador.de_indicador: row.get(indicador.id_columna)
+				'idIndicador': indicador.id_indicador,
+				'indicador': indicador.de_indicador,
+				'valor': row.get(indicador.id_columna)
 			})
 		return data
 
