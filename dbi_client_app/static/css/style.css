@@ -229,10 +229,9 @@ ul.top-menu > li > .logout {
 /*sidebar navigation*/
 
 #sidebar {
-    width: 400px; /*210px;*/
+    width: 210px; /*210px;*/
     height: 100%;
     position: fixed;
-    background: #424a5d;
 }
 
 #sidebar h5 {
@@ -350,11 +349,11 @@ ul.sidebar-menu li a span{
 }
 
 ul.sidebar-menu li a{
-    color: #aeb2b7;
+    color: #8c8c8c;
     text-decoration: none;
     display: block;
     padding: 15px 0 15px 10px;
-    font-size: 12px;
+    font-size: 13px;
     outline: none;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -364,8 +363,8 @@ ul.sidebar-menu li a{
 }
 
 ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
-    background: rgb(240, 65, 36);;
-    color: #fff;
+    background: rgba(123, 123, 123, 0.1);
+    color: #797777;
     display: block;
 
     -webkit-transition: all 0.3s ease;
@@ -397,7 +396,7 @@ ul.sidebar-menu li a.active i {
 
 /* MAIN CONTENT CONFIGURATION */
 #main-content {
-    margin-left: 400px;
+    margin-left: 210px;
 }
 
 .header, .footer {
@@ -764,7 +763,6 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 /* Dash Side */
 
 .ds {
-	background: #ffffff;
 	padding-top: 20px;
 }
 
@@ -2243,4 +2241,9 @@ label {
     display: flex;
     justify-content: center;
     padding: 5px;
+}
+.image-body{
+    margin-top: 20px;
+    background: white;    
+    border: 1px solid #e0e0e0;
 }
