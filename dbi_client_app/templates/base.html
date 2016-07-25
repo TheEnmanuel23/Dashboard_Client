@@ -47,13 +47,10 @@
                     <!-- settings start -->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            Indicadores
+                        <span class="glyphicon glyphicon-th"></span>
                         </a>
                         <ul class="dropdown-menu extended tasks-bar indicador-visibles">
-                            <div class="notify-arrow notify-arrow-green"></div>
-                            <li>
-                                <p class="green">{{ indicadores_list|length }} indicadores encontrados</p>
-                            </li>
+                            <div class="notify-arrow notify-arrow-white"></div>
                             {% for indicador in indicadores_list %}
                               <li>
                                   <a href="" id="{{ indicador.pk }}">
@@ -71,7 +68,7 @@
                               </li>
                             {% endfor %}                            
                             <li class="external">
-                                <p style="color: black;text-align:center;">Indicadores</p>
+                                <p style="color: black;text-align:center;">Indicadores - {{ indicadores_list|length }} </p>
                             </li>
                         </ul>
                     </li>
