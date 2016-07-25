@@ -745,6 +745,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     cursor: pointer;
     display: inline-block;
     font-size: 20px;
+    color: white;
 }
 
 
@@ -2252,4 +2253,30 @@ label {
 
 .panel-right{
     padding-left: 15px;
+}
+
+.glyphicon-nav {
+  width: 18px;
+  padding: 6px 0;
+  position: relative;
+  display: inline-block;
+}
+.glyphicon-nav:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  border-top: 2px solid #e0e0e0;
+  border-bottom: 2px solid #e0e0e0;
+  top: 0px;
+}
+.glyphicon-nav:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  height: 2px;
+  width: 100%;
+  background: #e0e0e0;
 }
