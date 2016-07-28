@@ -53,12 +53,18 @@ class ConfigProject():
 				print(token)
 
 	def sql_isGrouped(self, sqlParsed):
-		isGrouped = False
+		keyword_GROUP_finded = False
+		keyword_BY_finded = False
 		for token in sqlParsed:
-			if token.ttype is Keyword and token.value.upper() == 'GROUP':
-				isGrouped = True
-				break
-		return isGrouped
+			print('NOTHING')
+			if keyword_GROUP_finded and keyword_BY_finded:
+				return True
+			elif token.ttype is Keyword and token.value.upper() == 'GROUP':
+				keyword_GROUP_finded = True
+			elif keyword_GROUP_finded:
+				if token.ttype is Keyword and token.value.upper() == 'BY':
+					keyword_BY_finded = True
+		return False
 
 	def getWhere(self, sqlParsed):
 		where = None
