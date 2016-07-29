@@ -1,7 +1,7 @@
 import cx_Oracle, sqlparse
 from dbi_client_app.models import *
-from sqlparse.sql import Where
-from sqlparse.tokens import Keyword
+from sqlparse.sql import Where, Comparison
+from sqlparse.tokens import Keyword, Whitespace
 
 class ConfigProject():
 	def __init__(self, projectToConfig):
@@ -30,47 +30,96 @@ class ConfigProject():
 
 	def settingWhere(self, sqlOriginal):
 		sqlParsed = sqlparse.parse(sqlOriginal)[0]
-		originalWhere = self.getWhere(sqlParsed)
+		originalWhere = self.getWhereOfSql(sqlParsed)
+		self.eachFiltros(self.project,originalWhere)
+		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)
 		if(originalWhere):
 			whereCloned = str(originalWhere)
-			filtros = DxinFiltros.objects.filter(id_proyecto = self.project)
 			for filtro in filtros:
 				newWhere = None
 				if(filtro.in_defecto.upper() ==  'S' ):
-					newWhere = ' and ' + filtro.id_columna + " = '%s'" % filtro.valor_defecto
+					newWhere = ' and ' + filtro.id_columna + " = '%s' " % filtro.valor_defecto
 				if(newWhere):
 					whereCloned += str(newWhere)
 
-			print(whereCloned)
-		elif self.sql_isGrouped(sqlParsed):
-			print('is grouped')
+			# print(sqlOriginal.replace(str(originalWhere), whereCloned))
 		else:
-			print('ehhh more easy')
+			sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
+			newQuery = sqlOriginal
+			queryFormated =  newQuery.replace(sqlAfterClauseFrom, '')
+			where = ' where '			
+			for filtro in filtros:
+				if(filtro.in_defecto.upper() ==  'S' ):
+					where += filtro.id_columna + " = '%s' " % filtro.valor_defecto
+			queryFormated += where + sqlAfterClauseFrom	
 
-	def extract_groupBy(self, sqlParsed):
-		for token in sqlParsed:
-			if token.ttype is Keyword and token.value.upper() == 'GROUP':
-				print(token)
-
-	def sql_isGrouped(self, sqlParsed):
-		keyword_GROUP_finded = False
-		keyword_BY_finded = False
-		for token in sqlParsed:
-			print('NOTHING')
-			if keyword_GROUP_finded and keyword_BY_finded:
-				return True
-			elif token.ttype is Keyword and token.value.upper() == 'GROUP':
-				keyword_GROUP_finded = True
-			elif keyword_GROUP_finded:
-				if token.ttype is Keyword and token.value.upper() == 'BY':
-					keyword_BY_finded = True
-		return False
-
-	def getWhere(self, sqlParsed):
+	def getWhereOfSql(self, sqlParsed):
 		where = None
 		for token in sqlParsed:
 			if isinstance(token, Where):
 				where = token
 				break
-
 		return where
+
+	def extractSqlAfterClauseFrom(self, sqlParsed):
+		sqlAfterClauseFrom = ''
+		keyword_FROM_finded = False
+		clause_FROM_finalized = False
+		for token in sqlParsed:
+			if keyword_FROM_finded:				
+				if clause_FROM_finalized:					
+					sqlAfterClauseFrom += token.value
+				elif token.ttype is Keyword:
+					sqlAfterClauseFrom += token.value
+					clause_FROM_finalized = True
+			elif token.ttype is Keyword and token.value.upper() == 'FROM':
+				keyword_FROM_finded = True
+		return sqlAfterClauseFrom
+
+	def eachFiltros(self, project, portion_where):		
+		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)
+		self.eachFiltrosDefault(filtros, portion_where)
+
+	def eachFiltrosDefault(self, filtros, portion_where):		
+		dictOfWhere = self.convertClauseWhereToDictionary(portion_where)
+		for filtro in filtros:
+			if(filtro.in_defecto.upper() ==  'S' ):
+				whereModel = WhereModel(filtro.id_columna, filtro.valor_defecto)
+				self.setCondition(whereModel, dictOfWhere)
+		return dictOfWhere
+
+	def setCondition(self,whereModel, dictionaryOfData):
+		value = self.removeSingleQuotes(whereModel.column_value)
+		dictionaryOfData[whereModel.column_name] = "'%s'" % (value)
+		return dictionaryOfData
+
+	def removeSingleQuotes(self, stringToRemoveSingleQuotes):
+		newString = stringToRemoveSingleQuotes.replace("'", '')
+		return newString
+
+	def convertDictionaryWhereToSqlWhere(self, dictionaryOfWhere):
+		print('converting...')
+
+	def convertClauseWhereToDictionary(self, portion_where = ''):
+		conditions = dict()
+		if portion_where:
+			for token in portion_where:
+				if isinstance(token, Comparison):
+					tupleOfData = self.convertComparisionToTuple(token)
+					conditions[tupleOfData[0]] = tupleOfData[-1]
+		return conditions
+
+	def convertComparisionToTuple(self, comparision):
+		tupleOfData = tuple()
+		for item in comparision:
+			if not str(item).isspace():
+				tupleOfData += (str(item),)
+		return tupleOfData
+
+class WhereModel:
+	column_name = ''
+	column_value = ''
+
+	def __init__(self, column_name, column_value):
+		self.column_name = column_name
+		self.column_value = column_value
