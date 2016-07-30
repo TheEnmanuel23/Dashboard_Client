@@ -29,29 +29,22 @@ class ConfigProject():
 		return columns
 
 	def settingWhere(self, sqlOriginal):
-		sqlParsed = sqlparse.parse(sqlOriginal)[0]
-		originalWhere = self.getWhereOfSql(sqlParsed)
-		self.eachFiltros(self.project,originalWhere)
-		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)
-		if(originalWhere):
-			whereCloned = str(originalWhere)
-			for filtro in filtros:
-				newWhere = None
-				if(filtro.in_defecto.upper() ==  'S' ):
-					newWhere = ' and ' + filtro.id_columna + " = '%s' " % filtro.valor_defecto
-				if(newWhere):
-					whereCloned += str(newWhere)
+		sqlParsed = self.getSqlParsed(sqlOriginal)
+		sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
+		queryFormated =  sqlOriginal.replace(sqlAfterClauseFrom, '')
+		queryWithNewWhere = self.replaceOldWhere(queryFormated, sqlParsed)  +' ' + sqlAfterClauseFrom
+		print(queryWithNewWhere)
 
-			# print(sqlOriginal.replace(str(originalWhere), whereCloned))
-		else:
-			sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
-			newQuery = sqlOriginal
-			queryFormated =  newQuery.replace(sqlAfterClauseFrom, '')
-			where = ' where '			
-			for filtro in filtros:
-				if(filtro.in_defecto.upper() ==  'S' ):
-					where += filtro.id_columna + " = '%s' " % filtro.valor_defecto
-			queryFormated += where + sqlAfterClauseFrom	
+	def replaceOldWhere(self, sql, sqlParsed):
+		originalWhere = self.getWhereOfSql(sqlParsed)		
+		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)	
+		dictWhere = self.eachFiltrosDefault(filtros, originalWhere)
+		newWhere = 'where %s' % self.convertDictionaryWhereToSqlWhere(dictWhere)
+		queryWithNewWhere = sql.replace(str(originalWhere), newWhere)
+		return queryWithNewWhere
+
+	def getSqlParsed(self, sql):
+		return sqlparse.parse(sql)[0]
 
 	def getWhereOfSql(self, sqlParsed):
 		where = None
@@ -76,10 +69,6 @@ class ConfigProject():
 				keyword_FROM_finded = True
 		return sqlAfterClauseFrom
 
-	def eachFiltros(self, project, portion_where):		
-		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)
-		self.eachFiltrosDefault(filtros, portion_where)
-
 	def eachFiltrosDefault(self, filtros, portion_where):		
 		dictOfWhere = self.convertClauseWhereToDictionary(portion_where)
 		for filtro in filtros:
@@ -98,7 +87,14 @@ class ConfigProject():
 		return newString
 
 	def convertDictionaryWhereToSqlWhere(self, dictionaryOfWhere):
-		print('converting...')
+		conditions = ''
+		i = 1
+		for item in dictionaryOfWhere:
+			conditions += "%s=%s" % (str(item), str(dictionaryOfWhere[item]))
+			if i < len(dictionaryOfWhere):
+				conditions += ' and '
+			i += 1
+		return conditions
 
 	def convertClauseWhereToDictionary(self, portion_where = ''):
 		conditions = dict()
