@@ -4,6 +4,7 @@ from .models import *
 class configIndicators:
 	def __init__(self, projectToConfig):
 		self.project = projectToConfig.project
+		projectToConfig.settingCursorDefault()
 		self.column_names = projectToConfig.getColumnsDescriptions()
 		self.cursor = projectToConfig.cursor
 

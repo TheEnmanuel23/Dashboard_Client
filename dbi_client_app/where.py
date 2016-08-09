@@ -1,18 +1,37 @@
 from dbi_client_app.models import *
 from sqlparse.sql import Where, Comparison
-
+from django.db.models import Q
 
 class ConfigWhereClause:
 	def __init__(self, project):
 		self.project = project
 
-	def replaceOldWhere(self, sql, sqlParsed):
-		originalWhere = self.getWhereOfSql(sqlParsed)		
-		filtros = DxinFiltros.objects.filter(id_proyecto = self.project)	
-		dictWhere = self.eachFiltrosDefault(filtros, originalWhere)
+	def getQueryWithNewWhere_Default(self, sql, sqlParsed):
+		filtros = self.getFiltros(onlyDefault=True)
+		queryWithNewWhere = self.getQueryWithNewWhere(sql, sqlParsed, filtros)
+		return queryWithNewWhere
+
+	def getQueryWithNewWhere_CustomizedForUser(self, sql, sqlParsed):
+		filtros = self.getFiltros(onlyDefault=False)
+		queryWithNewWhere = self.getQueryWithNewWhere(sql, sqlParsed, filtros)
+		return queryWithNewWhere
+
+	def getQueryWithNewWhere(self, sql, sqlParsed, filtros):
+		originalWhere = self.getWhereOfSql(sqlParsed)
+		dictWhere = self.eachFiltros(filtros, originalWhere)
 		newWhere = 'where %s' % self.convertDictionaryWhereToSqlWhere(dictWhere)
 		queryWithNewWhere = sql.replace(str(originalWhere), newWhere)
 		return queryWithNewWhere
+
+	def getFiltros(self, onlyDefault):
+		filtros = None
+		if onlyDefault:
+			filtros = DxinFiltros.objects.filter(Q(id_proyecto = self.project) 
+						and 
+						(Q(in_defecto='S')| Q(in_defecto='s')))
+		else :
+			filtros = DxinFiltros.objects.filter(id_proyecto = self.project)	
+		return filtros
 
 	def getWhereOfSql(self, sqlParsed):
 		where = None
@@ -22,13 +41,15 @@ class ConfigWhereClause:
 				break
 		return where
 
-	def eachFiltrosDefault(self, filtros, portion_where):		
+	def eachFiltros(self, filtros, portion_where):		
 		dictOfWhere = self.convertClauseWhereToDictionary(portion_where)
 		for filtro in filtros:
-			if(filtro.in_defecto.upper() ==  'S' ):
-				whereModel = WhereModel(filtro.id_columna, filtro.valor_defecto)
-				self.setCondition(whereModel, dictOfWhere)
+			whereModel = WhereModel(filtro.id_columna, filtro.valor_defecto)
+			self.setCondition(whereModel, dictOfWhere)
 		return dictOfWhere
+
+	def filtros(self, filtros):
+		dictOfWhere = self.convertClauseWhereToDictionary(portion_where)
 
 	def setCondition(self,whereModel, dictionaryOfData):
 		value = self.removeSingleQuotes(whereModel.column_value)

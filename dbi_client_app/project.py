@@ -7,12 +7,10 @@ class ConfigProject():
 	def __init__(self, projectToConfig):
 		self.project = projectToConfig
 		self.connection = self.project.id_conexionbd
-		self.setCursor()
 
-	def setCursor(self):
+	def settingCursorDefault(self):
 		sql = self.project.sql
-		where = self.settingWhere(sql)
-		print(where)
+		newSql = self.settingSql(sql)
 		ip = self.connection.nb_servidor
 		port = self.connection.nu_puerto
 		sid = self.connection.nb_basedatos
@@ -21,19 +19,16 @@ class ConfigProject():
 		tns_dsn = cx_Oracle.makedsn(ip, port, sid)
 		db = cx_Oracle.connect(user, password, tns_dsn)
 		self.cursor = db.cursor();
-		self.cursor.execute(sql)
+		print(newSql)
+		self.cursor.execute(newSql)
 		return self.cursor
 
-	def getColumnsDescriptions(self):
-		columns = [col[0] for col in self.cursor.description]
-		return columns
-
-	def settingWhere(self, sqlOriginal):
+	def settingSql(self, sqlOriginal):
 		sqlParsed = self.getSqlParsed(sqlOriginal)
 		sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
 		queryFormated =  sqlOriginal.replace(sqlAfterClauseFrom, '')
 		where = ConfigWhereClause(self.project)
-		queryWithNewWhere = where.replaceOldWhere(queryFormated, sqlParsed)  +' ' + sqlAfterClauseFrom
+		queryWithNewWhere = where.getQueryWithNewWhere_Default(queryFormated, sqlParsed)  +' ' + sqlAfterClauseFrom
 		return queryWithNewWhere
 
 	def getSqlParsed(self, sql):
@@ -53,3 +48,7 @@ class ConfigProject():
 			elif token.ttype is Keyword and token.value.upper() == 'FROM':
 				keyword_FROM_finded = True
 		return sqlAfterClauseFrom
+
+	def getColumnsDescriptions(self):
+		columns = [col[0] for col in self.cursor.description]
+		return columns
