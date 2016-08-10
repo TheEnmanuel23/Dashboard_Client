@@ -6,29 +6,42 @@ from .where import ConfigWhereClause
 class ConfigProject():
 	def __init__(self, projectToConfig):
 		self.project = projectToConfig
-		self.connection = self.project.id_conexionbd
+		self.connection = self.project.id_conexionbd	
 
-	def settingCursorDefault(self):
-		sql = self.project.sql
-		newSql = self.settingSql(sql)
-		ip = self.connection.nb_servidor
-		port = self.connection.nu_puerto
-		sid = self.connection.nb_basedatos
-		user = self.connection.id_usuario
-		password = self.connection.password
-		tns_dsn = cx_Oracle.makedsn(ip, port, sid)
-		db = cx_Oracle.connect(user, password, tns_dsn)
+	def settingCursor(self, sqlToExecute_and_preconfigured):
+		serverConfig = self.serverConfigurationData()
+		db = cx_Oracle.connect(serverConfig['user'], serverConfig['password'], serverConfig['tns_dsn'])
 		self.cursor = db.cursor();
-		print(newSql)
-		self.cursor.execute(newSql)
+		self.cursor.execute(sqlToExecute_and_preconfigured)
 		return self.cursor
 
-	def settingSql(self, sqlOriginal):
+	def serverConfigurationData(self):
+		configurationData = {
+			'ip': self.connection.nb_servidor
+			'port': self.connection.nu_puerto
+			'sid': self.connection.nb_basedatos
+			'user': self.connection.id_usuario
+			'password': self.connection.password
+			'tns_dsn': cx_Oracle.makedsn(ip, port, sid)
+		}
+		return configurationData
+
+	def getSqlWithWhere_Defualt(self):
+		whereClause = ConfigWhereClause(self.project)
+		query = self.settingSql(self.project.sql, whereClause.getQueryWithNewWhere_Default)
+		return query
+
+	def getSqlWithWhere_CustomizedForUser(self):
+		whereClause = ConfigWhereClause(self.project)
+		query = self.settingSql(self.project.sql, whereClause.getQueryWithNewWhere_CustomizedForUser)
+		return query
+
+	def settingSql(self, sqlOriginal, callback_where):
 		sqlParsed = self.getSqlParsed(sqlOriginal)
 		sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
 		queryFormated =  sqlOriginal.replace(sqlAfterClauseFrom, '')
-		where = ConfigWhereClause(self.project)
-		queryWithNewWhere = where.getQueryWithNewWhere_Default(queryFormated, sqlParsed)  +' ' + sqlAfterClauseFrom
+		where = callback_where(sqlOriginal, sqlParsed)
+		queryWithNewWhere = "%s %s" % (where, sqlAfterClauseFrom)
 		return queryWithNewWhere
 
 	def getSqlParsed(self, sql):
