@@ -136,6 +136,12 @@
                         </tr>
                       </thead>
                       <tbody id="indicador-table-values">
+                        {% for indicador in indicadores_values %}
+                           <tr>
+                            <td>{{indicador.indicador}}</td>
+                            <td>{{indicador.valor}}</td>
+                          </tr>
+                        {% endfor %}
                       </tbody>
                     </table>                  
                   </div><!-- /col-lg-3 -->

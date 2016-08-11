@@ -16,7 +16,7 @@ class home(DetailView):
 	    self.object = self.get_object()
 	    project = LoadProject(self.object)
 	    context['indicadores_list'] = project.indicators.getIndicadoresList()
-	    #context['indicadores_values'] = project.indicators.getIndicadoresWithValue('PET')
+	    context['indicadores_values'] = project.indicators.getIndicadoresWithValueToLoadPage()
 	    return context
 
 class indicadoresTableValues(ListView):
@@ -27,7 +27,7 @@ class indicadoresTableValues(ListView):
 		idProject = request.GET.get('idProject', None);
 		self.object = DxinProyectos.objects.get(id_proyecto = idProject)
 		project = LoadProject(self.object)
-		listIndicadores = project.indicators.getIndicadoresWithValue(sectionFigureDefault)
+		listIndicadores = project.indicators.getIndicadoresWithValueAjax(sectionFigureDefault)
 		return self.json_to_response(listIndicadores)
 
 	def json_to_response(self, listIndicadores):

@@ -7,15 +7,24 @@ class configIndicators:
 		self.cursor = projectToConfig.getCursor_Default()
 		self.column_names = projectToConfig.getColumnsDescriptions(self.cursor)
 
-	def getIndicadoresWithValue(self, object_id):
+	def getIndicadoresWithValueToLoadPage(self):		
+		listDataOfCursor = self.convertCursorToList()
+		data = self.getIndicadoresWithValue(listDataOfCursor[0])
+		return data
+
+	def getIndicadoresWithValueAjax(self, object_id):
+		row = self.getRowOfCursor(str(object_id),)
+		data = self.getIndicadoresWithValue(row)
+		return data
+
+	def getIndicadoresWithValue(self, rowIndicador):
 		data = list( )
 		indicadores = self.getIndicadoresList()
-		row = self.getRowOfCursor(str(object_id),)
 		for indicador in indicadores:			
 			data.append({
 				'idIndicador': indicador.id_indicador,
 				'indicador': indicador.de_indicador,
-				'valor': row.get(indicador.id_columna)
+				'valor': rowIndicador.get(indicador.id_columna)
 			})
 		return data
 
@@ -29,12 +38,11 @@ class configIndicators:
 
 	def getRowOfCursor(self, object_id):
 		rowOfCursorToReturn = None
-		listData = self.convertCursorToList()
-
-		for data, column in ((data, column) for data in  listData for column in self.column_names):
-			objectToFind = data[column]	
+		listDataOfCursor = self.convertCursorToList()
+		for cursorRow, column in ((cursorRow, column) for cursorRow in  listDataOfCursor for column in self.column_names):
+			objectToFind = cursorRow[column]	
 			if objectToFind == object_id:
-				rowOfCursorToReturn = data
+				rowOfCursorToReturn = cursorRow
 				break
 		return rowOfCursorToReturn
 

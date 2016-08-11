@@ -1,6 +1,7 @@
 dbClient.Views.IndicadoresTableValues = Backbone.View.extend({
 	el: $('body'),
-	initialize: function(){
+	initialize: function(){		
+		$('#indicador-table-values').empty();
 		this.model.on('add', this.render);
 	},
 	render: function(indicadorRow){
