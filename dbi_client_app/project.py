@@ -25,9 +25,6 @@ class ConfigProject():
 		db = cx_Oracle.connect(serverConfig['user'], serverConfig['password'], serverConfig['tns_dsn'])
 		cursor = db.cursor();
 		cursor.execute(sqlToExecute_and_preconfigured)
-		print(sqlToExecute_and_preconfigured)	
-		for row in cursor:
-			print(row)
 		return cursor
 
 	def serverConfigurationData(self):

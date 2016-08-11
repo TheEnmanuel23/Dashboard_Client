@@ -7,10 +7,10 @@ class configIndicators:
 		self.cursor = projectToConfig.getCursor_Default()
 		self.column_names = projectToConfig.getColumnsDescriptions(self.cursor)
 
-	def getIndicadoresWithValue(self):
+	def getIndicadoresWithValue(self, object_id):
 		data = list( )
 		indicadores = self.getIndicadoresList()
-		row = self.getRowOfCursor('PET',)
+		row = self.getRowOfCursor(str(object_id),)
 		for indicador in indicadores:			
 			data.append({
 				'idIndicador': indicador.id_indicador,
