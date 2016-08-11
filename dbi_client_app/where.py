@@ -30,7 +30,9 @@ class ConfigWhereClause:
 						and 
 						(Q(in_defecto='S')| Q(in_defecto='s')))
 		else :
-			filtros = DxinFiltros.objects.filter(id_proyecto = self.project)	
+			filtros = DxinFiltros.objects.filter(Q(id_proyecto = self.project)	
+						and 
+						(Q(in_defecto='N')| Q(in_defecto='n')))
 		return filtros
 
 	def getWhereOfSql(self, sqlParsed):
