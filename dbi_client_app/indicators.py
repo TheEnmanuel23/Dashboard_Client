@@ -1,14 +1,13 @@
-import cx_Oracle
 from .models import *
+from .server import Server
 
 class configIndicators:
 	def __init__(self, projectToConfig):
 		self.project = projectToConfig.project
 		self.cursor = projectToConfig.getCursor_Default()
-		self.column_names = projectToConfig.getColumnsDescriptions(self.cursor)
 
 	def getIndicadoresWithValueToLoadPage(self):		
-		listDataOfCursor = self.convertCursorToList()
+		listDataOfCursor = Server.convertCursorToList(self.cursor)
 		data = self.getIndicadoresWithValue(listDataOfCursor[0])
 		return data
 
@@ -32,22 +31,16 @@ class configIndicators:
 		data = list()
 		allIndicadoresByProject = DxinIndicadores.objects.filter(id_proyecto = self.project.pk)
 		for indicador in allIndicadoresByProject:
-			if indicador.id_columna in self.column_names:
+			if indicador.id_columna in Server.getColumnsDescriptions(self.cursor):
 				data.append(indicador)
 		return data	
 
 	def getRowOfCursor(self, object_id):
 		rowOfCursorToReturn = None
-		listDataOfCursor = self.convertCursorToList()
+		listDataOfCursor = Server.convertCursorToList(self.cursor)
 		for cursorRow, column in ((cursorRow, column) for cursorRow in  listDataOfCursor for column in self.column_names):
 			objectToFind = cursorRow[column]	
 			if objectToFind == object_id:
 				rowOfCursorToReturn = cursorRow
 				break
 		return rowOfCursorToReturn
-
-	def convertCursorToList(self):
-		dictData = list()
-		for row in self.cursor:
-			dictData.append(dict(zip(self.column_names, row)))
-		return dictData

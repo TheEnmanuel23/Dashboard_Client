@@ -1,5 +1,5 @@
 import sqlparse
-from sqlparse.tokens import Keyword, Whitespace
+from sqlparse.tokens import Keyword
 
 class ConfigSQL:
 	def settingSql(self, sqlOriginal, callback_sqlWithNewWhere):
