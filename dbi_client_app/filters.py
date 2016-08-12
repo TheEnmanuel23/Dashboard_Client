@@ -15,9 +15,9 @@ class ConfigFilters:
 			data = self.getListOfDataOfSql(filtro.sql)
 			dictData = self.convertToDictionary(data)
 			dictData['id_columna'] = str(filtro.id_columna)
-			dictData['desc_columna'] = str('Mes')
+			dictData['de_columna'] = str(filtro.de_columna)
 			listOfDataForeachFilter.append(dictData)
-			
+		print(listOfDataForeachFilter)
 		return listOfDataForeachFilter
 
 	def getListOfDataOfSql(self, sql):

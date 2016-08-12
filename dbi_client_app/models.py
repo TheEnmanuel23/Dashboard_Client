@@ -149,9 +149,11 @@ class DxinFiltros(models.Model):
     id_filtro = models.CharField(primary_key=True, max_length=50)
     id_columna = models.CharField(max_length=50)
     sql = models.CharField(max_length=2000)
-    valor_defecto = models.CharField(max_length=2000, blank=True, null=True)
+    valor_defecto = models.CharField(max_length=2000)
     in_defecto = models.CharField(max_length=1)
     fh_carga = models.DateField()
+    ti_valor = models.CharField(max_length=5)
+    de_columna = models.CharField(max_length=50)
 
     class Meta:
         managed = False
