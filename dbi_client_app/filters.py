@@ -9,13 +9,16 @@ class ConfigFilters:
 		self.server = Server(self.project.id_conexionbd)
 
 	def getFilters(self):
-		filtros = DxinFiltros.objects.filter(Q(id_proyecto = self.project))		
+		filtros = DxinFiltros.objects.filter(Q(id_proyecto = self.project))
+		listOfDataForeachFilter = list()
 		for filtro in filtros:
 			data = self.getListOfDataOfSql(filtro.sql)
 			dictData = self.convertToDictionary(data)
 			dictData['id_columna'] = str(filtro.id_columna)
 			dictData['desc_columna'] = str('Mes')
-			print(dictData['desc_columna'])
+			listOfDataForeachFilter.append(dictData)
+			
+		return listOfDataForeachFilter
 
 	def getListOfDataOfSql(self, sql):
 		cursor = self.server.settingCursor(sql)

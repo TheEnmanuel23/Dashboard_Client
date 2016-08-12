@@ -16,10 +16,10 @@ class home(DetailView):
 	    context = super(home, self).get_context_data(**kwargs)
 	    self.object = self.get_object()
 	    project = LoadProject(self.object)
+	    filters = ConfigFilters(self.object)
 	    context['indicadores_list'] = project.indicators.getIndicadoresList()
 	    context['indicadores_values'] = project.indicators.getIndicadoresWithValueToLoadPage()
-	    filters = ConfigFilters(self.object)
-	    filters.getFilters()
+	    context['filters'] = filters.getFilters()
 	    return context
 
 class indicadoresTableValues(ListView):
