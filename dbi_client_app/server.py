@@ -34,3 +34,9 @@ class Server:
 	def getColumnsDescriptions(cursor):
 		columns = [col[0] for col in cursor.description]
 		return columns
+
+	def getDataOfCursor(self, cursor):
+		tupleOfResult= tuple()
+		for result in cursor:
+			tupleOfResult += result
+		return tupleOfResult

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView, TemplateView
+from .filters import ConfigFilters
 
 # Create your views here.
 from .models import *
@@ -17,6 +18,8 @@ class home(DetailView):
 	    project = LoadProject(self.object)
 	    context['indicadores_list'] = project.indicators.getIndicadoresList()
 	    context['indicadores_values'] = project.indicators.getIndicadoresWithValueToLoadPage()
+	    filters = ConfigFilters(self.object)
+	    filters.getFilters()
 	    return context
 
 class indicadoresTableValues(ListView):
