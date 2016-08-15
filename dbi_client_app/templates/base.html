@@ -42,37 +42,35 @@
             <a href="index.html" class="logo">{{ project }}</a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
-                <!--  notification start -->
-                <ul class="nav top-menu">
                     <!-- settings start -->
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                        <span class="glyphicon glyphicon-th"></span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar indicador-visibles">
-                            <div class="notify-arrow notify-arrow-white"></div>
-                            {% for indicador in indicadores_list %}
-                              <li>
-                                  <a href="" id="{{ indicador.pk }}">
-                                      <div class="task-info">
-                                          <div class="desc">{{ indicador }}
-                                          </div>
-                                          <div class="percent">100%</div>
-                                      </div>
-                                      <div class="progress progress-striped">
-                                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                              <span class="sr-only">40% Complete (success)</span>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </li>
-                            {% endfor %}                            
-                            <li class="external">
-                                <p style="color: black;text-align:center;">Indicadores - {{ indicadores_list|length }} </p>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                       <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Filtros</button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Configuración de filtros</h4>
+                                </div>
+                                <div class="modal-body">                                  
+                                    <ul class="nav nav-tabs">
+                                    {% for filter in filters %}
+                                        <li class="active"><a data-toggle="tab" href="#home">HOME</a></li> 
+                                    {% endfor %}                                   
+                                      <div class="tab-content">
+                                        <div id="home" class="tab-pane fade in active">
+                                          <h3>HOME</h3>
+                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>          
+                                    </div>
+                                  </ul>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
             </div>
         </header>
       <!--header end-->
@@ -159,8 +157,10 @@
     <script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
     <!-- Colapse options -->
+    <!--
     <script src="{% static 'js/vendor/jquery.dcjqaccordion.2.7.js' %}"></script>
     <script src="{% static 'js/vendor/jquery.scrollTo.min.js' %}"></script>
+    -->
   <!-- styling scrollbar -->
     <script src="{% static 'js/vendor/jquery.nicescroll.js' %}"></script>
     <script src="{% static 'js/vendor/underscore-min.js' %}"></script>    

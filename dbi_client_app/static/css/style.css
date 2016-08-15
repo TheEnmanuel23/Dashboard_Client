@@ -42,15 +42,6 @@ a, a:hover, a:focus {
     height: 100%;
 }
 
-/* Bootstrap Modifications */
-.modal-header {
-	background: rgb(240, 65, 36);;
-}
-
-.modal-title {
-	color: white;
-}
-
 .btn-round {
 	border-radius: 20px;
 	-webkit-border-radius: 20px;
@@ -2269,4 +2260,8 @@ label {
   height: 2px;
   width: 100%;
   background: #e0e0e0;
+}
+
+.modal-backdrop {
+    z-index: 1000;
 }
