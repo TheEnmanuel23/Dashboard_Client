@@ -2265,3 +2265,9 @@ label {
 .modal-backdrop {
     z-index: 1000;
 }
+
+.dropdown-menu {
+    max-height: 400px;
+    overflow: hidden;
+    overflow-y: auto;
+}

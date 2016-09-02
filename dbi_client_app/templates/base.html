@@ -70,9 +70,22 @@
                                 <div class="tab-content ">
                                     {% for filter in filters %}
                                        <div class="tab-pane active" id="{{filter.filtroRow.id_filtro}}">
-                                          {% for data in filter.data %}
-                                            {{data}}
-                                          {% endfor %}
+                                            <div class="panel panel-default">
+                                              <div class="panel-heading">Fecha específica</div>
+                                                <div class="panel-body">
+                                                    <div class="dropdown">
+                                                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            Seleccione {{filter.de_columna}}...
+                                                            <span class="caret"></span>
+                                                          </button>
+                                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                            {% for data in filter.data %}                                            
+                                                                    <li><a href="#">{{data}}</a></li>
+                                                            {% endfor %}
+                                                          </ul>
+                                                    </div>
+                                              </div>
+                                            </div>
                                         </div>
                                     {% endfor %} 
                                     <div class="tab-pane" id="2">
