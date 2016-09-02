@@ -45,32 +45,50 @@
                     <!-- settings start -->
                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Filtros</button>
                           <!-- Modal -->
-                          <div class="modal fade" id="myModal" role="dialog">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                  <h4 class="modal-title">Configuración de filtros</h4>
-                                </div>
-                                <div class="modal-body">                                  
-                                    <ul class="nav nav-tabs">
+                        <div class="modal fade" id="myModal" role="dialog">
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Configuración de filtros</h4>
+                              </div>
+                              <div class="modal-body">       
+                                <ul class="nav nav-tabs">
                                     {% for filter in filters %}
-                                        <li class="active"><a data-toggle="tab" href="#home">HOME</a></li> 
-                                    {% endfor %}                                   
-                                      <div class="tab-content">
-                                        <div id="home" class="tab-pane fade in active">
-                                          <h3>HOME</h3>
-                                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        </div>          
+                                        <li class="active">
+                                            <a href="#{{filter.filtroRow.id_filtro}}" data-toggle="tab">{{filter.de_columna}}</a>
+                                        </li>
+                                    {% endfor %} 
+                                    
+                                    <li>
+                                        <a href="#2" data-toggle="tab">Without clearfix</a>
+                                    </li>
+                                    <li>
+                                        <a href="#3" data-toggle="tab">Solution</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content ">
+                                    {% for filter in filters %}
+                                       <div class="tab-pane active" id="{{filter.filtroRow.id_filtro}}">
+                                          {% for data in filter.data %}
+                                            {{data}}
+                                          {% endfor %}
+                                        </div>
+                                    {% endfor %} 
+                                    <div class="tab-pane" id="2">
+                                      <h3>MMMM</h3>
                                     </div>
-                                  </ul>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
+                                    <div class="tab-pane" id="3">
+                                      <h3>add clearfix to tab-content (see the css)</h3>
+                                    </div>
+                                </div>      
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                               </div>
                             </div>
                           </div>
+                        </div>
             </div>
         </header>
       <!--header end-->

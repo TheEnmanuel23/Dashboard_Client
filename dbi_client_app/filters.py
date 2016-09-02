@@ -14,10 +14,10 @@ class ConfigFilters:
 		for filtro in filtros:
 			data = self.getListOfDataOfSql(filtro.sql)
 			dictData = self.convertToDictionary(data)
+			dictData['filtroRow'] = filtro
 			dictData['id_columna'] = str(filtro.id_columna)
 			dictData['de_columna'] = str(filtro.de_columna)
 			listOfDataForeachFilter.append(dictData)
-		print(listOfDataForeachFilter)
 		return listOfDataForeachFilter
 
 	def getListOfDataOfSql(self, sql):
