@@ -58,14 +58,7 @@
                                         <li class="active">
                                             <a href="#{{filter.filtroRow.id_filtro}}" data-toggle="tab">{{filter.de_columna}}</a>
                                         </li>
-                                    {% endfor %} 
-                                    
-                                    <li>
-                                        <a href="#2" data-toggle="tab">Without clearfix</a>
-                                    </li>
-                                    <li>
-                                        <a href="#3" data-toggle="tab">Solution</a>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                                 <div class="tab-content ">
                                     {% for filter in filters %}
@@ -73,27 +66,18 @@
                                             <div class="panel panel-default">
                                               <div class="panel-heading">Fecha específica</div>
                                                 <div class="panel-body">
-                                                    <div class="dropdown">
-                                                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                            Seleccione {{filter.de_columna}}...
-                                                            <span class="caret"></span>
-                                                          </button>
-                                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                            {% for data in filter.data %}                                            
-                                                                    <li><a href="#">{{data}}</a></li>
-                                                            {% endfor %}
-                                                          </ul>
-                                                    </div>
+                                                <div class="btn-group">
+                                                    <a class="btn dropdown-toggle btn-select" data-toggle="dropdown" href="#">Seleccione {{filter.de_columna}} <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                      {% for data in filter.data %}
+                                                        <li><a href="#">{{data}}</a></li>
+                                                      {% endfor %}
+                                                    </ul>
+                                                  </div>
                                               </div>
                                             </div>
                                         </div>
-                                    {% endfor %} 
-                                    <div class="tab-pane" id="2">
-                                      <h3>MMMM</h3>
-                                    </div>
-                                    <div class="tab-pane" id="3">
-                                      <h3>add clearfix to tab-content (see the css)</h3>
-                                    </div>
+                                    {% endfor %}
                                 </div>      
                               </div>
                               <div class="modal-footer">

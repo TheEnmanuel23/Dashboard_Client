@@ -4,6 +4,7 @@ from sqlparse.tokens import Keyword
 class ConfigSQL:
 	def settingSql(self, sqlOriginal, callback_sqlWithNewWhere):
 		sqlParsed = self.getSqlParsed(sqlOriginal)
+		print(sqlParsed)
 		sqlAfterClauseFrom = self.extractSqlAfterClauseFrom(sqlParsed)
 		queryFormated =  sqlOriginal.replace(sqlAfterClauseFrom, '')
 		sqlWithNewWhere = callback_sqlWithNewWhere(queryFormated, sqlParsed)
