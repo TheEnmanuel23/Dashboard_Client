@@ -1,13 +1,14 @@
-import cx_Oracle
+import psycopg2
 
-class Server:
+class Server(IServer):
 	def __init__(self, DxinConexionConfiguracion_model):
 		self.DxinConexionConfiguracion_model = DxinConexionConfiguracion_model
 
 	def settingCursor(self, sqlToExecute):
-		serverConfig = self.serverConfigurationData()		
-		db = cx_Oracle.connect(serverConfig['user'], serverConfig['password'], serverConfig['tns_dsn'])
-		cursor = db.cursor();
+		serverConfig = self.serverConfigurationData()
+		db = psycopg2.connect("host='%s' dbname='%s' user='%s' password='%s'" % serverConfig['ip'],
+		serverConfig['dbname'], serverConfig['user'], serverConfig['password'])
+		cursor = db.cursor()
 		cursor.execute(sqlToExecute)
 		return cursor
 
@@ -15,12 +16,9 @@ class Server:
 		configurationData = {
 			'ip': self.DxinConexionConfiguracion_model.nb_servidor,
 			'port': self.DxinConexionConfiguracion_model.nu_puerto,
-			'sid': self.DxinConexionConfiguracion_model.nb_basedatos,
 			'user': self.DxinConexionConfiguracion_model.id_usuario,
 			'password': self.DxinConexionConfiguracion_model.password,
-			'tns_dsn': cx_Oracle.makedsn(self.DxinConexionConfiguracion_model.nb_servidor,
-										self.DxinConexionConfiguracion_model.nu_puerto,
-										self.DxinConexionConfiguracion_model.nb_basedatos)
+			'dbname': self.DxinConexionConfiguracion_model.nb_basedatos
 		}
 		return configurationData
 
