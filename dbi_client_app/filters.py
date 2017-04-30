@@ -1,4 +1,3 @@
-import cx_Oracle
 from .server import Server
 from .models import *
 from django.db.models import Q

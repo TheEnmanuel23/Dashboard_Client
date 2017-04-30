@@ -1,6 +1,6 @@
 import psycopg2
 
-class Server(IServer):
+class Server:
 	def __init__(self, DxinConexionConfiguracion_model):
 		self.DxinConexionConfiguracion_model = DxinConexionConfiguracion_model
 
