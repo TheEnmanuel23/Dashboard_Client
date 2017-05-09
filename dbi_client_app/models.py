@@ -20,28 +20,24 @@ class DxinConexionConfiguracion(models.Model):
     fh_carga = models.DateField()
 
     class Meta:
-        managed = False
         db_table = 'dxin_conexion_configuracion'
 
-
 class DxinFiltros(models.Model):
-    id_proyecto = models.ForeignKey('DxinProyectos', models.DO_NOTHING, db_column='id_proyecto')
+    id_proyecto = models.ForeignKey('DxinProyectos', db_column='id_proyecto')
     id_filtro = models.CharField(primary_key=True, max_length=50)
     id_columna = models.CharField(max_length=50)
     sql = models.CharField(max_length=2000)
     valor_defecto = models.CharField(max_length=2000)
     in_defecto = models.CharField(max_length=1)
     fh_carga = models.DateField()
-    ti_valor = models.CharField(max_length=5)
-    de_columna = models.CharField(max_length=50)
+    ti_valor = models.CharField(max_length=5, default='')
+    de_columna = models.CharField(max_length=50, default='')
 
     class Meta:
-        managed = False
         db_table = 'dxin_filtros'
 
-
 class DxinIndicadores(models.Model):
-    id_proyecto = models.ForeignKey('DxinProyectos', models.DO_NOTHING, db_column='id_proyecto')
+    id_proyecto = models.ForeignKey('DxinProyectos', db_column='id_proyecto')
     id_indicador = models.CharField(primary_key=True, max_length=50)
     de_indicador = models.CharField(max_length=500)
     id_columna = models.CharField(max_length=50)
@@ -50,9 +46,7 @@ class DxinIndicadores(models.Model):
     in_predeterminado = models.CharField(max_length=1)
 
     class Meta:
-        managed = False
         db_table = 'dxin_indicadores'
-
 
 class DxinMapasClaves(models.Model):
     id_proyecto = models.CharField(max_length=50)
@@ -62,9 +56,7 @@ class DxinMapasClaves(models.Model):
     id_clave = models.FloatField(primary_key=True)
 
     class Meta:
-        managed = False
         db_table = 'dxin_mapas_claves'
-
 
 class DxinProyectos(models.Model):
     id_proyecto = models.IntegerField(primary_key=True)
@@ -75,9 +67,7 @@ class DxinProyectos(models.Model):
     fh_carga = models.DateField()
 
     class Meta:
-        managed = False
         db_table = 'dxin_proyectos'
-
 
 class DxinReglas(models.Model):
     id_proyecto = models.CharField(max_length=100)
@@ -87,9 +77,7 @@ class DxinReglas(models.Model):
     id_regla = models.FloatField(primary_key=True)
 
     class Meta:
-        managed = False
         db_table = 'dxin_reglas'
-
 
 class DxinReglasIndicadores(models.Model):
     id_proyecto = models.CharField(max_length=100)
@@ -105,5 +93,4 @@ class DxinReglasIndicadores(models.Model):
     id_regla_ind = models.FloatField(primary_key=True)
 
     class Meta:
-        managed = False
         db_table = 'dxin_reglas_indicadores'
